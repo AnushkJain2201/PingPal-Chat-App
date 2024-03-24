@@ -3,6 +3,10 @@
 // now, we have changed the type into module, we 
 import express from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+import authRoutes from "./routes/auth.routes.js"
+import connectToMongoDB from "./db/coonectToMongoDB.js";
 
 const app = express();
 dotenv.config();
@@ -13,4 +17,9 @@ app.get('/', (req, res) => {
     res.send('Hello World aa gya mai');
 });
 
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.use("/api/auth", authRoutes);
+
+app.listen(port, () => {
+    connectToMongoDB();
+    console.log(`Server running on port ${port}`);
+});
