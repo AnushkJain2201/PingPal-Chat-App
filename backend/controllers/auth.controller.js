@@ -46,9 +46,29 @@ export const signup = catchAsync(async (req, res, next) => {
 
 });
 
-export const login = (req, res) => {
-    console.log('Login user')
-}
+export const login = catchAsync(async (req, res, next) => {
+    const {username, password} = req.body;
+
+    if (!username || !password) {
+        return next(new AppError('Please provide username and password!', 400));
+    }
+
+    const user = await User.findOne({username});
+    const isPasswordCorrect = await bcrypt.compare(password, user?.password || "");
+
+    if(!user || !isPasswordCorrect) {
+        return next(new AppError("Incoorect password or username", 400));
+    }
+
+    generateTokenAndSetCookie(user._id, res);
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            user
+        }
+    })
+});
 
 export const logout = (req, res) => {
     console.log('Logout user')
