@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import AppError from "../utils/appError.js";
 import { catchAsync } from "../utils/catchAsync.js";
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const signup = catchAsync(async (req, res, next) => {
 
@@ -32,6 +33,8 @@ export const signup = catchAsync(async (req, res, next) => {
         gender,
         profilePic: gender === 'male' ? boyProfilePic : girlProfilePic
     });
+
+    generateTokenAndSetCookie(newUser._id, res);
 
     res.status(201).json({
         status: 'success',

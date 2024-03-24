@@ -5,7 +5,7 @@ import express from "express";
 import dotenv from "dotenv";
 
 import authRoutes from "./routes/auth.routes.js"
-import connectToMongoDB from "./db/coonectToMongoDB.js";
+import connectToMongoDB from "./db/connectToMongoDB.js";
 
 import  globalErrorMiddleware  from "./controllers/error.controller.js";
 
