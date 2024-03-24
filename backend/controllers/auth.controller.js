@@ -80,4 +80,3 @@ export const logout = catchAsync(async (req, res, next) => {
         message: "Logged out successfully"
     });
 });
-
