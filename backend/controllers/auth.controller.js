@@ -34,12 +34,13 @@ export const signup = catchAsync(async (req, res, next) => {
         profilePic: gender === 'male' ? boyProfilePic : girlProfilePic
     });
 
-    generateTokenAndSetCookie(newUser._id, res);
+    const token = generateTokenAndSetCookie(newUser._id, res);
 
     res.status(201).json({
         status: 'success',
         data: {
             newUser,
+            token
         }
     });
 
@@ -60,17 +61,23 @@ export const login = catchAsync(async (req, res, next) => {
         return next(new AppError("Incoorect password or username", 400));
     }
 
-    generateTokenAndSetCookie(user._id, res);
+    const token = generateTokenAndSetCookie(user._id, res);
 
     res.status(200).json({
         status: "success",
         data: {
-            user
+            user,
+            token
+
         }
     })
 });
 
-export const logout = (req, res) => {
-    console.log('Logout user')
-}
+export const logout = catchAsync(async (req, res, next) => {
+    res.cookie("jwt", "", {maxAge: 0});
+    res.status(200).json({
+        status: "success",
+        message: "Logged out successfully"
+    });
+});
 
