@@ -6,7 +6,7 @@ import { Messages } from "./Messages";
 import {TiMessages} from "react-icons/ti"
 
 export const MessageContainer = () => {
-	// const noChatSelected = true;
+	
 
 	const {selectedConversation, setSelectedConversation} = useConversation();
 

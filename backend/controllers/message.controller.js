@@ -33,12 +33,6 @@ export const sendMessage = catchAsync(async (req, res, next) => {
 
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    // res.status(201).json({
-    //     status: "success",
-    //     data: {
-    //         newMessage: newMessage.message
-    //     }
-    // });
 
     res.status(201).json(newMessage);
 
@@ -56,11 +50,7 @@ export const getMessages = catchAsync(async (req, res, next) => {
         return res.status(200).json([]);
     }
 
-    res.status(200).json({
-        status: "success",
-        results: conversation.messages.length,
-        data: {
-            messages: conversation.messages
-        }
-    })
+    const messages = conversation.messages;
+
+    res.status(200).json(messages);
 });
