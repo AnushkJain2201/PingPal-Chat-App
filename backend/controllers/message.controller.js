@@ -33,12 +33,14 @@ export const sendMessage = catchAsync(async (req, res, next) => {
 
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    res.status(201).json({
-        status: "success",
-        data: {
-            newMessage
-        }
-    });
+    // res.status(201).json({
+    //     status: "success",
+    //     data: {
+    //         newMessage: newMessage.message
+    //     }
+    // });
+
+    res.status(201).json(newMessage);
 
 });
 
