@@ -1,20 +1,26 @@
-import Conversation from "./Conversation"
+import useGetConversations from "../../hooks/useGetConversations";
+import { getRandomEmoji } from "../../utils/emojis";
+import Loader from "../general/Loader";
+import Conversation from "./Conversation";
 
 const Conversations = () => {
-  return (
-    <div className="py-2 flex flex-col overflow-auto">
+	const { loading, conversations } = useGetConversations();
+	console.log("CONVERSATIONS", conversations);
 
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      <Conversation />
-      
+	return (
+		<div className='py-2 flex flex-col overflow-auto'>
+			{conversations.map((conversation, idx) => (
+				<Conversation
+					key={conversation._id}
+					conversation={conversation}
+					emoji={getRandomEmoji()}
+					lastIdx={idx === conversations.length - 1}
+				/>
+			))}
 
-      
-    </div>
-  )
-}
+			{loading ? <Loader /> : null}
+		</div>
+	);
+};
 
-export default Conversations
+export default Conversations;
